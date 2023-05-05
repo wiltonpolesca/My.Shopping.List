@@ -40,4 +40,11 @@ public class InMemoryDatabase
 
         listItems.Add(value);
     }
+
+    public IList<object> GetData(string key)
+    {
+        _data.TryGetValue(key, out var listItems);
+        return listItems ?? Enumerable.Empty<object>().ToList();
+
+    }
 }

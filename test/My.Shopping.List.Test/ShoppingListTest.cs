@@ -9,6 +9,7 @@ public class ShoppingListTest
     [Fact]
     public void Should_total_value_be_100()
     {
+
         var shopList = new ShoppingList
         {
             Name = "Minha lista de test"
@@ -23,6 +24,14 @@ public class ShoppingListTest
     }
 
     [Fact]
+    public void Should_be_possible_create_a_new_list_with_name()
+    {
+        var listName = "Name of the list";
+        var list = new ShoppingList(listName);
+        list.Name.Should().Be(listName);
+    }
+
+        [Fact]
     public void Should_be_possible_store_list_in_memory()
     {
         //InMemoryDatabase.Instance

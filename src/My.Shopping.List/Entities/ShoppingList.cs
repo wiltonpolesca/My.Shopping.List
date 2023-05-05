@@ -2,8 +2,20 @@
 
 public class ShoppingList
 {
-    public string Name { get; set; } = string.Empty;
-    public IList<ShoppingListItem> Items { get; private set; } = new List<ShoppingListItem>();
+    public ShoppingList()
+    {
+        Name = string.Empty;
+        Items = new List<ShoppingListItem>();
+    }
+
+    public ShoppingList(string name)
+        : this()
+    {
+        Name = name;
+    }
+
+    public string Name { get; set; }
+    public IList<ShoppingListItem> Items { get; private set; }
 
     public double TotalValue()
     {
