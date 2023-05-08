@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using My.Core.InMemory.Database;
 using My.Shopping.List.Entities;
-using My.Shopping.List.Repository;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -13,9 +13,9 @@ public class ShoppingListController : ControllerBase
     private const string ShoppingListTable = "ShoppingList";
 
     [HttpGet]
-    public IEnumerable<object> Get()
+    public IEnumerable<ShoppingList> Get()
     {
-        return InMemoryDatabase.Instance.GetData(ShoppingListTable);
+        return InMemoryDatabase.Instance.GetData<ShoppingList>(ShoppingListTable);
     }
 
     [HttpGet("{id}")]
@@ -27,7 +27,7 @@ public class ShoppingListController : ControllerBase
     [HttpPost]
     public void Post([FromBody] ShoppingList value)
     {
-        InMemoryDatabase.Instance.AddNewItem(ShoppingListTable,value);
+        InMemoryDatabase.Instance.AddNewItem(ShoppingListTable, value);
     }
 
     [HttpPut("{id}")]

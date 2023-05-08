@@ -1,21 +1,10 @@
 ﻿namespace My.Shopping.List.Entities;
 
-public class ShoppingList
+public class ShoppingList : Entity
 {
-    public ShoppingList()
-    {
-        Name = string.Empty;
-        Items = new List<ShoppingListItem>();
-    }
 
-    public ShoppingList(string name)
-        : this()
-    {
-        Name = name;
-    }
-
-    public string Name { get; set; }
-    public IList<ShoppingListItem> Items { get; private set; }
+    public string Name { get; set; } = string.Empty;
+    public IList<ShoppingListItem> Items { get; private set; } = new List<ShoppingListItem>();
 
     public double TotalValue()
     {

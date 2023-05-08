@@ -1,6 +1,5 @@
 using FluentAssertions;
 using My.Shopping.List.Entities;
-using My.Shopping.List.Repository;
 
 namespace My.Shopping.List.Test;
 
@@ -21,19 +20,5 @@ public class ShoppingListTest
         shopList.Items.Add(new ShoppingListItem { Name = "Arroz", Qtde = 1, Price = 10.0, IsChecked = false });
 
         shopList.TotalValue().Should().Be(100.0);
-    }
-
-    [Fact]
-    public void Should_be_possible_create_a_new_list_with_name()
-    {
-        var listName = "Name of the list";
-        var list = new ShoppingList(listName);
-        list.Name.Should().Be(listName);
-    }
-
-        [Fact]
-    public void Should_be_possible_store_list_in_memory()
-    {
-        //InMemoryDatabase.Instance
     }
 }
