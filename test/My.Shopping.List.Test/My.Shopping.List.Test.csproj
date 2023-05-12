@@ -24,6 +24,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\..\src\My.Core.InMemory.Database\My.Core.InMemory.Database.csproj" />
     <ProjectReference Include="..\..\src\My.Shopping.List\My.Shopping.List.csproj" />
   </ItemGroup>
 

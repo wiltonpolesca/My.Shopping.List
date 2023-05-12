@@ -19,9 +19,9 @@ public class ShoppingListController : ControllerBase
     }
 
     [HttpGet("{id}")]
-    public string Get(int id)
+    public ShoppingList? Get(int id)
     {
-        return "value";
+        return InMemoryDatabase.Instance.TryGetById<ShoppingList>(ShoppingListTable, id);
     }
 
     [HttpPost]
@@ -31,12 +31,14 @@ public class ShoppingListController : ControllerBase
     }
 
     [HttpPut("{id}")]
-    public void Put(int id, [FromBody] string value)
+    public void Put(int id, [FromBody] ShoppingList value)
     {
+        InMemoryDatabase.Instance.UpdateItem(ShoppingListTable, id, value);
     }
 
     [HttpDelete("{id}")]
     public void Delete(int id)
     {
+        InMemoryDatabase.Instance.DeleteItem<ShoppingList>(ShoppingListTable, id);
     }
 }
