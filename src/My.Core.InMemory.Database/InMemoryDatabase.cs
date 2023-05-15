@@ -1,16 +1,21 @@
 ﻿
 using My.Core.Abstracts;
+using System.Collections.Concurrent;
 
 namespace My.Core.InMemory.Database;
 
 public class InMemoryDatabase
 {
     private readonly Dictionary<string, List<IEntity>> _data;
+
+    //Armazena qualquer coisa
+    private readonly Dictionary<string, List<object>> _objectData;
     private static InMemoryDatabase? _instance;
 
     private InMemoryDatabase()
     {
         _data = new Dictionary<string, List<IEntity>>();
+        _objectData = new Dictionary<string, List<object>>();
 
     }
 
@@ -27,8 +32,29 @@ public class InMemoryDatabase
         }
     }
 
+    /// <summary>
+    /// Armazena qualquer coisa que não implementa IEntity
+    /// </summary>
+
+    public void AddNewItem(string key, object value)
+    {
+
+        if (value == null)
+        {
+            throw new Exception("Invalid null value");
+        }
+
+        if (!_objectData.TryGetValue(key, out var listItems))
+        {
+            listItems = new List<object>();
+            _objectData.Add(key, listItems);
+        }
+
+        listItems.Add(value);
+    }
+
     public void AddNewItem<T>(string key, T value)
-        where T : IEntity
+    where T : IEntity
     {
 
         if (value == null)
@@ -105,6 +131,21 @@ public class InMemoryDatabase
         }
 
         return default;
+    }
+
+
+    /// <summary>
+    /// Retorna lista de objetos que não implementam o IEntity
+    /// </summary>
+    public IList<object> GetData(string key)
+    {
+        _objectData.TryGetValue(key, out var listItems);
+
+        if (listItems != null)
+        {
+            return listItems;
+        }
+        return Enumerable.Empty<object>().ToList();
     }
 
     public IList<T> GetData<T>(string key)
