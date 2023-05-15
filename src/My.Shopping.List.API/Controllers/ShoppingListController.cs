@@ -1,6 +1,8 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using My.Core.InMemory.Database;
 using My.Shopping.List.Entities;
+using My.Shopping.List.Services;
+using System.Runtime.CompilerServices;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -10,35 +12,35 @@ namespace My.Shopping.List.API.Controllers;
 [ApiController]
 public class ShoppingListController : ControllerBase
 {
-    private const string ShoppingListTable = "ShoppingList";
+    private readonly ShoppingListService service = new ShoppingListService();
 
     [HttpGet]
     public IEnumerable<ShoppingList> Get()
     {
-        return InMemoryDatabase.Instance.GetData<ShoppingList>(ShoppingListTable);
+        return InMemoryDatabase.Instance.GetData<ShoppingList>(ShoppingListService.ShoppingListTable);
     }
 
     [HttpGet("{id}")]
     public ShoppingList? Get(int id)
     {
-        return InMemoryDatabase.Instance.TryGetById<ShoppingList>(ShoppingListTable, id);
+        return InMemoryDatabase.Instance.TryGetById<ShoppingList>(ShoppingListService.ShoppingListTable, id);
     }
 
     [HttpPost]
     public void Post([FromBody] ShoppingList value)
     {
-        InMemoryDatabase.Instance.AddNewItem(ShoppingListTable, value);
+        service.Add(value);
     }
 
     [HttpPut("{id}")]
     public void Put(int id, [FromBody] ShoppingList value)
     {
-        InMemoryDatabase.Instance.UpdateItem(ShoppingListTable, id, value);
+        InMemoryDatabase.Instance.UpdateItem(ShoppingListService.ShoppingListTable, id, value);
     }
 
     [HttpDelete("{id}")]
     public void Delete(int id)
     {
-        InMemoryDatabase.Instance.DeleteItem<ShoppingList>(ShoppingListTable, id);
+        InMemoryDatabase.Instance.DeleteItem<ShoppingList>(ShoppingListService.ShoppingListTable, id);
     }
 }

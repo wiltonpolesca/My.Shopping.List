@@ -8,6 +8,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\My.Core.Abstracts\My.Core.Abstracts.csproj" />
+    <ProjectReference Include="..\My.Core.InMemory.Database\My.Core.InMemory.Database.csproj" />
   </ItemGroup>
 
 </Project>
