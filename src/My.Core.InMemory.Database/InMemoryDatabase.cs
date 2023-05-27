@@ -79,16 +79,16 @@ public class InMemoryDatabase
         listItems.Add(value);
     }
 
-    public void UpdateItem<T>(string key, int id, T value)
+    public void Update<T>(string key, T value)
         where T : IEntity
     {
 
-        if (value == null || id == default)
+        if (value == null || value.Id == default)
         {
             throw new Exception("Invalid null value");
         }
 
-        var item = TryGetById<T>(key, id);
+        var item = TryGetById<T>(key, value.Id);
         if (item == null)
         {
             throw new Exception("Not found");

@@ -2,8 +2,8 @@
 
 public class ShoppingList : Entity
 {
-
     public string Name { get; set; } = string.Empty;
+    public int Order { get; set; }
     public IList<ShoppingListItem> Items { get; private set; } = new List<ShoppingListItem>();
 
     public double TotalValue()
@@ -19,4 +19,5 @@ public class ShoppingList : Entity
 
         return total;
     }
+
 }

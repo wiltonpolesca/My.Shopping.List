@@ -1,5 +1,6 @@
 ﻿using My.Core.InMemory.Database;
 using My.Shopping.List.Entities;
+using System.Security.Cryptography;
 
 namespace My.Shopping.List.Services;
 
@@ -30,4 +31,10 @@ public class ShoppingListService
         }
     }
 
+    public void Update (ShoppingList shoppingList)
+    {
+        IsValid(shoppingList);
+        InMemoryDatabase.Instance.Update(ShoppingListTable, shoppingList);
+
+    }
 }

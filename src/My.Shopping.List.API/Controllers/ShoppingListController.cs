@@ -32,10 +32,10 @@ public class ShoppingListController : ControllerBase
         service.Add(value);
     }
 
-    [HttpPut("{id}")]
-    public void Put(int id, [FromBody] ShoppingList value)
+    [HttpPut]
+    public void Put([FromBody] ShoppingList value)
     {
-        InMemoryDatabase.Instance.UpdateItem(ShoppingListService.ShoppingListTable, id, value);
+        service.Update(value);
     }
 
     [HttpDelete("{id}")]
