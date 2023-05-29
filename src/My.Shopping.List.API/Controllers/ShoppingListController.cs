@@ -12,35 +12,35 @@ namespace My.Shopping.List.API.Controllers;
 [ApiController]
 public class ShoppingListController : ControllerBase
 {
-    private readonly ShoppingListService service = new ShoppingListService();
+    private readonly ShoppingListService _service = new ShoppingListService();
 
     [HttpGet]
     public IEnumerable<ShoppingList> Get()
     {
-        return InMemoryDatabase.Instance.GetData<ShoppingList>(ShoppingListService.ShoppingListTable);
+       return _service.Get();
     }
 
     [HttpGet("{id}")]
     public ShoppingList? Get(int id)
     {
-        return InMemoryDatabase.Instance.TryGetById<ShoppingList>(ShoppingListService.ShoppingListTable, id);
+        return _service.Get(id);
     }
 
     [HttpPost]
     public void Post([FromBody] ShoppingList value)
     {
-        service.Add(value);
+        _service.Add(value);
     }
 
     [HttpPut]
     public void Put([FromBody] ShoppingList value)
     {
-        service.Update(value);
+        _service.Update(value);
     }
 
     [HttpDelete("{id}")]
     public void Delete(int id)
     {
-        InMemoryDatabase.Instance.DeleteItem<ShoppingList>(ShoppingListService.ShoppingListTable, id);
+        _service.Delete(id);
     }
 }

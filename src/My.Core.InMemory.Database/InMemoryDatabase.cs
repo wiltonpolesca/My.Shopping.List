@@ -53,7 +53,7 @@ public class InMemoryDatabase
         listItems.Add(value);
     }
 
-    public void AddNewItem<T>(string key, T value)
+    public void Add<T>(string key, T value)
     where T : IEntity
     {
 
@@ -101,7 +101,7 @@ public class InMemoryDatabase
         }
     }
 
-    public void DeleteItem<T>(string key, int id)
+    public void Delete<T>(string key, int id)
         where T : IEntity
     {
 
