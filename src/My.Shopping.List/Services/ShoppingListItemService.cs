@@ -3,18 +3,18 @@ using My.Shopping.List.Entities;
 
 namespace My.Shopping.List.Services;
 
-public class ShoppingListService
+public class ShoppingListItemService
 {
-    private const string ShoppingListTable = "ShoppingList";
+    private const string ShoppingListTable = "ShoppingListItem";
 
-    public IEnumerable<ShoppingList> Get()
+    public IEnumerable<ShoppingListItem> Get()
     {
-        return InMemoryDatabase.Instance.GetData<ShoppingList>(ShoppingListTable);
+        return InMemoryDatabase.Instance.GetData<ShoppingListItem>(ShoppingListTable);
     }
 
-    public ShoppingList? Get(int id)
+    public ShoppingListItem? Get(int id)
     {
-        var result = InMemoryDatabase.Instance.TryGetById<ShoppingList>(ShoppingListTable, id);
+        var result = InMemoryDatabase.Instance.TryGetById<ShoppingListItem>(ShoppingListTable, id);
 
         if (result == null)
         {
@@ -25,13 +25,13 @@ public class ShoppingListService
     }
 
 
-    public void Add(ShoppingList shoppingList)
+    public void Add(ShoppingListItem shoppingList)
     {
         IsValid(shoppingList, Actions.Add);
         InMemoryDatabase.Instance.Add(ShoppingListTable, shoppingList);
     }
 
-    public void Update(ShoppingList shoppingList)
+    public void Update(ShoppingListItem shoppingList)
     {
         IsValid(shoppingList, Actions.Update);
         InMemoryDatabase.Instance.Update(ShoppingListTable, shoppingList);
@@ -40,30 +40,33 @@ public class ShoppingListService
 
     public void Delete(int id)
     {
-        InMemoryDatabase.Instance.Delete<ShoppingList>(ShoppingListTable, id);
+        InMemoryDatabase.Instance.Delete<ShoppingListItem>(ShoppingListTable, id);
     }
 
-    private void IsValid(ShoppingList entity, Actions action)
+    private void IsValid(ShoppingListItem entity, Actions action)
     {
         if (string.IsNullOrWhiteSpace(entity.Name))
         {
             throw new Exception("Invalid name");
         }
 
-        ShoppingList? exists = default;
+        ShoppingListItem? exists = default;
         if (action == Actions.Add)
 
             exists = InMemoryDatabase
                .Instance
-               .GetData<ShoppingList>(ShoppingListTable)
-               .FirstOrDefault(x => x.Name.Equals(entity.Name));
+               .GetData<ShoppingListItem>(ShoppingListTable)
+               .Where(x => x.Name.Equals(entity.Name))
+               .Where(x => x.ShoppingListId.Equals(entity.ShoppingListId))
+               .FirstOrDefault();
 
         else if (action == Actions.Update)
         {
             exists = InMemoryDatabase
                .Instance
-               .GetData<ShoppingList>(ShoppingListTable)
+               .GetData<ShoppingListItem>(ShoppingListTable)
                .Where(x => x.Name.Equals(entity.Name))
+               .Where(x => x.ShoppingListId.Equals(entity.ShoppingListId))
                .Where(x => x.Id != entity.Id)
                .FirstOrDefault();
         }

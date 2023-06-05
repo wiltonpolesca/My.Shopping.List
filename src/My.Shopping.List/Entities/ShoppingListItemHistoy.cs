@@ -1,6 +1,6 @@
 ﻿namespace My.Shopping.List.Entities;
 
-public class ShoppingListItemHistory
+public class ShoppingListItemHistory : Entity
 {
     public ShoppingListItem? ListItem { get; set; }
     public int Qtde { get; set; } = 0;

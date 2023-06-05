@@ -1,10 +1,12 @@
-﻿namespace My.Shopping.List.Entities;
+﻿using My.Core.Abstracts;
 
-public class ShoppingListItem
+namespace My.Shopping.List.Entities;
+
+public class ShoppingListItem : Entity
 {
     public int ShoppingListId { get; set; }
     public string Name { get; set; } = string.Empty;
     public int Qtde { get; set; }
     public double Price { get; set; }
-    public bool IsChecked { get; set; } = true;
+    public bool IsChecked { get; set; }
 }
